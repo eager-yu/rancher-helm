@@ -1,0 +1,24 @@
+install rancher on eks alb 
+
+helm upgrade --install rancher ./rancher \
+--namespace cattle-system \
+--set hostname=rancher.eagertest.aws-rd-test.splashtop.com \
+--set ingress.tls.source=secret \
+--set ingress.extraAnnotations.'alb\.ingress\.kubernetes\.io/scheme'=internet-facing \
+--set ingress.extraAnnotations.'alb\.ingress\.kubernetes\.io/target-type'=instance \
+--set ingress.extraAnnotations.'kubernetes\.io/ingress\.class'=alb \
+--set ingress.extraAnnotations.'alb\.ingress\.kubernetes\.io/certificate-arn'='arn:aws:acm:ap-northeast-1:489505268370:certificate/d06c8c50-30d1-4f7c-87d5-862af969d810' \
+
+====================================================================
+
+BUG: 
+
+
+metadata:
+  name: {{ template "rancher.fullname" . }}
+  labels:
+{{ include "rancher.labels" . | indent 4 }}
+  annotations:
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80},{"HTTPS": 443}]'  -----------
+{{- if .Values.ingress.configurationSnippet }}
+    nginx.ingress.kubernetes.io/configuration-snippet: |
