@@ -11,6 +11,31 @@ helm upgrade --install rancher ./rancher \
 --set ingress.extraAnnotations.'alb\.ingress\.kubernetes\.io/certificate-arn'='arn:aws:acm:ap-northeast-1:489505268370:certificate/d06c8c50-30d1-4f7c-87d5-862af969d810' \
 
 ====================================================================
+Rancher Server has been installed.
+
+NOTE: Rancher may take several minutes to fully initialize. Please standby while Certificates are being issued, Containers are started and the Ingress rule comes up.
+
+Check out our docs at https://rancher.com/docs/
+
+If you provided your own bootstrap password during installation, browse to https://rancher.eagertest.aws-rd-test.splashtop.com to get started.
+
+If this is the first time you installed Rancher, get started by running this command and clicking the URL it generates:
+
+```
+echo https://rancher.eagertest.aws-rd-test.splashtop.com/dashboard/?setup=$(kubectl get secret --namespace cattle-system bootstrap-secret -o go-template='{{.data.bootstrapPassword|base64decode}}')
+```
+
+To get just the bootstrap password on its own, run:
+
+```
+kubectl get secret --namespace cattle-system bootstrap-secret -o go-template='{{.data.bootstrapPassword|base64decode}}{{ "\n" }}'
+```
+
+
+
+
+====================================================================
+
 
 BUG: 
 
